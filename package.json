@@ -1,0 +1,49 @@
+{
+  "name": "@neap/funcky",
+  "version": "0.0.1",
+  "description": "Lightweight Serverless HTTP handler. It supports CORS and also assists in initialization of web app projects hosted on Google Cloud Functions, AWS Lambda or any standard NodeJs Express server.",
+  "contributors": [
+    "Nicolas Dao <nic@neap.co> (https://neap.co/)"
+  ],
+  "main": "src/index.js",
+  "scripts": {
+    "test": "mocha",
+    "eslint": "eslint src/ test/ --fix",
+    "release": "standard-version"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/neapjs/funky.git"
+  },
+  "keywords": [
+    "cors",
+    "google-cloud-functions",
+    "http-handler",
+    "google",
+    "cloud",
+    "functions"
+  ],
+  "author": "Nicolas Dao",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/neapjs/funky/issues"
+  },
+  "homepage": "https://github.com/neapjs/funky#readme",
+  "dependencies": {
+    "append-query": "^2.0.1",
+    "colors": "^1.1.2",
+    "express": "^4.16.2",
+    "http-errors": "^1.6.1",
+    "node-mocks-http": "^1.6.4",
+    "path-to-regexp": "^2.1.0",
+    "raw-body": "^2.3.2",
+    "shortid": "^2.2.8",
+    "vary": "^1.1.2"
+  },
+  "devDependencies": {
+    "chai": "^4.1.0",
+    "eslint": "^4.1.1",
+    "mocha": "^3.4.2",
+    "standard-version": "^4.2.0"
+  }
+}
