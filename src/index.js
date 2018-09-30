@@ -21,9 +21,9 @@ const cwdPath = f => path.join(process.cwd(), f)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////// 							START - INITIALIZE APP 							  ////////////////////////
 
-// This will get the configuration from the 'now.json' to configure the app
-const CONFIGPATH = cwdPath('now.json')
-const HOSTINGS = { 'now': true, 'sh': true, 'localhost': true, 'express': true, 'gcp': true, 'aws': true }
+// This will get the configuration from the 'app.json' to configure the app
+const CONFIGPATH = cwdPath('app.json')
+const HOSTINGS = { 'google': true, 'google-function': true, 'localhost': true, 'express': true, 'gcp': true, 'aws': true }
 const PARAMSMODE = { 'all': true, 'body': true, 'route': true, 'none': true }
 const getAppConfig = () => fs.existsSync(CONFIGPATH) ? require(CONFIGPATH) : {}
 
@@ -39,9 +39,8 @@ let _postEvent = () => Promise.resolve(null)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-const getActiveEnv = () => ((_config || {}).environment || {}).active || 'default'
-const getEnv = () => ((_config || {}).environment || {})[getActiveEnv()] || {}
-const getHostingType = () => getEnv().hostingType || 'localhost'
+const getAppJson = () => _config
+const getProvider = () => (getAppJson().hosting || {}).provider || 'localhost'
 
 /**
  * Converts a function similar to (req, res) => ... or (req, res, next) => ... to a promise similar to (req, res) => ...
@@ -157,11 +156,11 @@ const app = {
 	handleEvent: () => (req, res) => processEvent(req, res, _config, _endpoints, _handlers, _preEvent, _postEvent),
 	listen: (appName, port, fn) => {
 		const input = createListenArity(appName, port, 3000)
-		const hostingType = getHostingType()
+		const hostingType = getProvider()
 		if (!HOSTINGS[hostingType.toLowerCase()])
 			throw new Error(`Unsupported hosting type '${hostingType}'`)
 
-		let hostCategory = !hostingType || hostingType == 'localhost' || hostingType == 'now' ? 'express' : hostingType
+		let hostCategory = !hostingType || hostingType == 'localhost' || hostingType == 'google' ? 'express' : hostingType
 		const notLocal = hostingType != 'localhost'
 		const startMessage = notLocal
 			? `Ready to receive traffic${!notLocal ? ` on port ${input.port}` : ''}`
@@ -170,11 +169,29 @@ const app = {
 
 		// Determine what GCP category is setup
 		if (hostCategory == 'gcp') {
-			const activeEnv = getEnv()
+			const activeEnv = getAppJson()
 			if (activeEnv.gcp && activeEnv.gcp.trigger && activeEnv.gcp.trigger.type && activeEnv.gcp.trigger.type != 'https')
 				hostCategory = 'gcp_event'
 		}
 
+		const commonScript = `
+			if (require.main === module) {
+				const __express__ = require('express')
+				const { createServer: __createServer__ } = require('http')
+				const __server__ = __express__()
+				__server__.all('*', ${input.appName}.handleEvent())
+				const __ws__ = __createServer__(__server__)
+				${input.appName}.server = __ws__
+				__ws__.listen(${input.port}, () => { 
+					console.log("${startMessage}")
+					${secondMsg ? `console.log("${secondMsg}")` : ''}
+					${fn ? `
+					const __fn__ = ${fn.toString()}
+					__fn__()` : ''}
+				})
+			}
+			`
+		
 		// Normal Express Server Setup
 		if (!input.appName) {
 			const __express__ = require('express')
@@ -195,42 +212,32 @@ const app = {
 		else {
 			switch(hostCategory) {
 			case 'express': 
+				return commonScript
+			case 'google-function':
 				return `
-					const __express__ = require('express')
-					const { createServer: __createServer__ } = require('http')
-					const __server__ = __express__()
-					__server__.all('*', ${input.appName}.handleEvent())
-					const __ws__ = __createServer__(__server__)
-					${input.appName}.server = __ws__
-					__ws__.listen(${input.port}, () => { 
-						console.log("${startMessage}")
-						${secondMsg ? `console.log("${secondMsg}")` : ''}
-						${fn ? `
-						const __fn__ = ${fn.toString()}
-						__fn__()` : ''}
-					})
-					`
-			case 'gcp':
-				return `exports.handler = ${input.appName}.handleEvent()`
+				${commonScript}
+				exports.handler = ${input.appName}.handleEvent()`
 			case 'gcp_event':
 				return `
-					exports.handler = (event, next) => {	
-						const { req, res } = ${input.appName}.createGCPRequestResponse(event)
-						${input.appName}.handleEvent()(req, res).then(() => next())
-					}`
+				${commonScript}
+				exports.handler = (event, next) => {	
+					const { req, res } = ${input.appName}.createGCPRequestResponse(event)
+					${input.appName}.handleEvent()(req, res).then(() => next())
+				}`
 			case 'aws':
 				return `
-					exports.handler = (event, context, next) => {	
-						const { req, res } = ${input.appName}.createAWSRequestResponse(event)
-						${input.appName}.handleEvent()(req, res)
-						.then(() => {
-							const awsRes = ${input.appName}.createAWSResponse(res)
-							next(null, awsRes)
-						})
-						.catch(err => {
-							next(err, null)
-						})
-					}`
+				${commonScript}
+				exports.handler = (event, context, next) => {	
+					const { req, res } = ${input.appName}.createAWSRequestResponse(event)
+					${input.appName}.handleEvent()(req, res)
+					.then(() => {
+						const awsRes = ${input.appName}.createAWSResponse(res)
+						next(null, awsRes)
+					})
+					.catch(err => {
+						next(err, null)
+					})
+				}`
 			default:
 				throw new Error(`Unsupported hosting type '${hostCategory}'`)
 			}
@@ -539,6 +546,6 @@ const extendResponse = (req, res) => {
 module.exports = {
 	app,
 	cors,
-	get appConfig() { return getEnv() }
+	get appConfig() { return getAppJson() }
 }
 

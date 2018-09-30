@@ -1,5 +1,5 @@
 {
-  "name": "@neap/funcky",
+  "name": "@neap/funky",
   "version": "0.0.1",
   "description": "Lightweight Serverless HTTP handler. It supports CORS and also assists in initialization of web app projects hosted on Google Cloud Functions, AWS Lambda or any standard NodeJs Express server.",
   "contributors": [
@@ -8,7 +8,7 @@
   "main": "src/index.js",
   "scripts": {
     "test": "mocha",
-    "eslint": "eslint src/ test/ --fix",
+    "lint": "eslint src/ test/ --fix",
     "release": "standard-version"
   },
   "repository": {

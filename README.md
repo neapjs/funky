@@ -1,4 +1,4 @@
-# WebFunc &middot;  [![NPM](https://img.shields.io/npm/v/webfunc.svg?style=flat)](https://www.npmjs.com/package/webfunc) [![Tests](https://travis-ci.org/nicolasdao/webfunc.svg?branch=master)](https://travis-ci.org/nicolasdao/webfunc) [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause) [![Neap](https://neap.co/img/made_by_neap.svg)](#this-is-what-we-re-up-to)
+# Funky &middot;  [![NPM](https://img.shields.io/npm/v/@neap/funky.svg?style=flat)](https://www.npmjs.com/package/@neap/funky) [![Tests](https://travis-ci.org/neapjs/funky.svg?branch=master)](https://travis-ci.org/neapjs/funky) [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause) [![Neap](https://neap.co/img/made_by_neap.svg)](#this-is-what-we-re-up-to)
 __*Universal Serverless Web Framework*__. Write code for serverless similar to [Express](https://expressjs.com/) once, deploy everywhere (thanks to the awesome [Zeit Now-CLI](https://zeit.co/now)). This also include creating functions that can get triggered by [Google Cloud PubSub topics](https://cloud.google.com/pubsub/docs/overview). Targeted platforms:
 - [__*Zeit Now*__](https://zeit.co/now) (using express under the hood)
 - [__*Google Cloud Functions*__](https://cloud.google.com/functions/) (incl. reacting to [__*Pub/Sub events*__](reacting-to-google-pubsub-topics) or __*Storage changes*__)
@@ -6,7 +6,7 @@ __*Universal Serverless Web Framework*__. Write code for serverless similar to [
 - [__*Azure Functions*__](https://azure.microsoft.com/en-us/services/functions/) (COMING SOON...)
 
 ```js
-const { app } = require('webfunc')
+const { app } = require('@neap/funky')
 
 app.get('/users/:username', (req, res) => res.status(200).send(`Hello ${req.params.username}`))
 
