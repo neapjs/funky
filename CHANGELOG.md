@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.3"></a>
+## [0.1.3](https://github.com/neapjs/funky/compare/v0.1.2...v0.1.3) (2018-10-01)
+
+
+### Bug Fixes
+
+* 'listen' fails when the port is a string ([b015992](https://github.com/neapjs/funky/commit/b015992))
+
+
+
 <a name="0.1.2"></a>
 ## [0.1.2](https://github.com/neapjs/funky/compare/v0.1.1...v0.1.2) (2018-10-01)
 
