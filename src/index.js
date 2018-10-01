@@ -191,7 +191,7 @@ const app = {
 				})
 			}
 			`
-		
+
 		// Normal Express Server Setup
 		if (!input.appName) {
 			const __express__ = require('express')
@@ -270,9 +270,9 @@ const createListenArity = (arg1, arg2, defaultPort=3000) => {
 	// Case 1: 2 Arguments 
 	if (arg1 != undefined && arg2 != undefined) {
 		if (typeof(arg1) != 'string')
-			throw new Error('Wrong argument exception. When 2 arguments are passed to \'listen\', the first one must be a string.')
+			throw new Error(`Wrong argument exception. When 2 arguments are passed to \'listen\', the first one must be a string. ${JSON.stringify({ arg1, arg2, defaultPort }, null, ' ')}`)
 		if (typeof(arg2) != 'number')
-			throw new Error('Wrong argument exception. When 2 arguments are passed to \'listen\', the second one must be a number.')
+			throw new Error(`Wrong argument exception. When 2 arguments are passed to \'listen\', the second one must be a number. ${JSON.stringify({ arg1, arg2, defaultPort }, null, ' ')}`)
 		return { appName: arg1, port: arg2 }
 	}
 	// Case 2: 1 Argument

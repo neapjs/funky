@@ -9,8 +9,8 @@
   "scripts": {
     "test": "mocha",
     "lint": "eslint src/ test/ --fix",
-    "push": "git push --follow-tags origin master && npm publish=public",
-    "release": "standard-version"
+    "push": "git push --follow-tags origin master && npm publish --access=public",
+    "rls": "standard-version --release-as"
   },
   "repository": {
     "type": "git",
