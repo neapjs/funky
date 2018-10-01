@@ -269,6 +269,7 @@ const app = {
 const createListenArity = (arg1, arg2, defaultPort=3000) => {
 	// Case 1: 2 Arguments 
 	if (arg1 != undefined && arg2 != undefined) {
+		arg2 = arg2 * 1
 		if (typeof(arg1) != 'string')
 			throw new Error(`Wrong argument exception. When 2 arguments are passed to \'listen\', the first one must be a string. ${JSON.stringify({ arg1, arg2, defaultPort }, null, ' ')}`)
 		if (typeof(arg2) != 'number')
