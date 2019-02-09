@@ -10,7 +10,8 @@
     "test": "mocha",
     "lint": "eslint src/ test/ --fix",
     "push": "git push --follow-tags origin master && npm publish --access=public",
-    "rls": "standard-version --release-as"
+    "rls": "standard-version --release-as",
+    "v": "node -e \"console.log(require('./package.json').version)\""
   },
   "repository": {
     "type": "git",
