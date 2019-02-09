@@ -302,9 +302,9 @@ describe('app', () =>
 			const result_01 = fn(req_01, res_01).then(() => {
 				const headers = res_01._getHeaders()
 				assert.isOk(headers)
-				assert.equal(headers['Firstname'], 'Gimpy')
-				assert.equal(headers['Lastname'], 'Cool')
-				assert.equal(headers['Hello'], 'World')
+				assert.equal(headers['firstname'], 'Gimpy')
+				assert.equal(headers['lastname'], 'Cool')
+				assert.equal(headers['hello'], 'World')
 			})
 
 			return Promise.all([result_01])
@@ -872,8 +872,8 @@ describe('app', () =>
 				assert.equal(awsRes.body,'Hello Nic Dao')
 				const headers = awsRes.headers
 				assert.isOk(headers)
-				assert.equal(headers['Access-Control-Expose-Headers'], 'Authorization, Content-Type, Origin')
-				assert.equal(headers['Access-Control-Allow-Origin'], 'null')
+				assert.equal(headers['access-control-expose-headers'], 'Authorization, Content-Type, Origin')
+				assert.equal(headers['access-control-allow-origin'], 'null')
 			})
 		})))
 
