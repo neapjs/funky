@@ -8,7 +8,6 @@
 const getRawBody = require('raw-body')
 const path = require('path')
 const httpMocks = require('node-mocks-http')
-const appendQuery = require('append-query')
 
 /*eslint-disable */
 const utf8ToHex = s => s ? Buffer.from(s).toString('hex') : ''
@@ -153,6 +152,23 @@ const createGCPRequestResponse = (event={}, paramsPropName) => {
 	}
 }
 
+const appendQuery = (pathname, query) => {
+	if (!query)
+		return pathname
+
+	const t = typeof(query)
+	if (t == 'string') {
+		const q = query.trim()
+		return `${pathname}${/^\?/.test(q) ? q : `?${q}` }`
+	} else if (t == 'object') {
+		return Object.keys(query).reduce((acc,key,idx) => {
+			const sep = idx === 0 ? '?' : '&'
+			return `${acc}${sep}${key}=${query[key]}`
+		}, pathname || '')
+	} else
+		return pathname
+}
+
 const createAWSRequestResponse = (event={}, paramsPropName) => {
 	try {
 		const pathname = path.posix.join('/', event.path || '/')
@@ -200,6 +216,7 @@ const createAWSResponse = (res={}) => {
 
 module.exports = {
 	reqUtil: {
+		appendQuery,
 		getParams,
 		createGCPRequestResponse,
 		createAWSRequestResponse,

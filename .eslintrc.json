@@ -8,6 +8,11 @@
     "parserOptions": {
         "sourceType": "module"
     },
+    "globals": {
+        "describe": false,
+        "it": false,
+        "Buffer": false
+    },
     "rules": {
         "no-console":0,
         "indent": [

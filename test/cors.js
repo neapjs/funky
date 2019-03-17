@@ -9,10 +9,8 @@ const { assert } = require('chai')
 const httpMocks = require('node-mocks-http')
 const { app, cors } = require('../src/index')
 
-/*eslint-disable */
-describe('cors: #01', () => 
-	it(`Should set the response's origin header to the request's origin if it matches the configured list in CORS.`, () => {
-		/*eslint-enable */
+describe('cors', () => {
+	it('01- Should set the response\'s origin header to the request\'s origin if it matches the configured list in CORS.', () => {
 		const req = httpMocks.createRequest({
 			method: 'GET',
 			headers: {
@@ -38,12 +36,8 @@ describe('cors: #01', () =>
 			assert.equal(headers['access-control-expose-headers'], 'Authorization, Content-Type, Origin')
 			assert.equal(headers['access-control-allow-origin'], 'http://localhost:8080')
 		})
-	}))
-
-/*eslint-disable */
-describe('cors: #02', () => 
-	it(`Should set the response's origin header to null if the origin does not match the configured list in CORS.`, () => {
-		/*eslint-enable */
+	})
+	it('02 - Should set the response\'s origin header to null if the origin does not match the configured list in CORS.', () => {
 		const req = httpMocks.createRequest({
 			method: 'GET',
 			headers: {
@@ -69,12 +63,8 @@ describe('cors: #02', () =>
 			assert.equal(headers['access-control-expose-headers'], 'Authorization, Content-Type, Origin')
 			assert.equal(headers['access-control-allow-origin'], 'null')
 		})
-	}))
-
-/*eslint-disable */
-describe('cors: #03', () => 
-	it(`Should set a minimum set of CORS response's headers if the request is not an OPTIONS one.`, () => {
-		/*eslint-enable */
+	})
+	it('03 - Should set a minimum set of CORS response\'s headers if the request is not an OPTIONS one.', () => {
 		const req = httpMocks.createRequest({
 			method: 'GET',
 			headers: {
@@ -102,12 +92,8 @@ describe('cors: #03', () =>
 			assert.equal(headers['access-control-allow-origin'], 'http://localhost:8080')
 			assert.equal(headers['access-control-allow-credentials'], 'true')
 		})
-	}))
-
-/*eslint-disable */
-describe('cors: #04', () => 
-	it(`Should NOT set some CORS response's headers if the request is not an OPTIONS one.`, () => {
-		/*eslint-enable */
+	})
+	it('04 - Should NOT set some CORS response\'s headers if the request is not an OPTIONS one.', () => {
 		const req = httpMocks.createRequest({
 			method: 'GET',
 			headers: {
@@ -136,12 +122,8 @@ describe('cors: #04', () =>
 			assert.isOk(!headers['access-control-allow-methods'])
 			assert.isOk(!headers['access-control-max-age'])
 		})
-	}))
-
-/*eslint-disable */
-describe('cors: #05', () => 
-	it(`Should set all CORS response's headers if the request is an OPTIONS one.`, () => {
-		/*eslint-enable */
+	})
+	it('05 - Should set all CORS response\'s headers if the request is an OPTIONS one.', () => {
 		const req = httpMocks.createRequest({
 			method: 'OPTIONS',
 			headers: {
@@ -169,12 +151,8 @@ describe('cors: #05', () =>
 			assert.equal(headers['access-control-allow-methods'], 'GET, HEAD, OPTIONS, POST')
 			assert.equal(headers['access-control-max-age'], '1296000')
 		})
-	}))
-
-/*eslint-disable */
-describe('cors: #06', () => 
-	it('Should retrieves required response headers defined inside the config.json file.', () => {
-		/*eslint-enable */
+	})
+	it('06 - Should retrieves required response headers defined inside the config.json file.', () => {
 		const req_01 = httpMocks.createRequest({
 			method: 'GET',
 			headers: {
@@ -227,7 +205,6 @@ describe('cors: #06', () =>
 		})
 
 		return Promise.all([result_01, result_02])
-	}))
-
-
+	})
+})
 

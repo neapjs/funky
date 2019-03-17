@@ -9,11 +9,9 @@ const { assert } = require('chai')
 const httpMocks = require('node-mocks-http')
 const { app, cors } = require('../src/index')
 
-/*eslint-disable */
-describe('app', () => 
-	describe('#handleEvent: 01', () => 
-		it(`Should support one endpoint definition.`, () => {
-			/*eslint-enable */
+describe('app', () => {
+	describe('#handleEvent', () => {
+		it('01- Should support one endpoint definition.', () => {
 			const req_01 = httpMocks.createRequest({
 				method: 'GET',
 				headers: {
@@ -31,13 +29,8 @@ describe('app', () =>
 			return app.handleEvent()(req_01, res_01).then(() => {				
 				assert.equal(res_01._getData(),'Hello User')
 			})
-		})))
-
-/*eslint-disable */
-describe('app', () => 
-	describe('#handleEvent: 02', () => 
-		it(`Should support multiple endpoints definitions.`, () => {
-			/*eslint-enable */
+		})
+		it('02 - Should support multiple endpoints definitions.', () => {
 			const req_01 = httpMocks.createRequest({
 				method: 'GET',
 				headers: {
@@ -74,13 +67,8 @@ describe('app', () =>
 			})
 
 			return Promise.all([result_01, result_02])
-		})))
-
-/*eslint-disable */
-describe('app', () => 
-	describe('#handleEvent: 03', () => 
-		it(`Should support simple single routing with parameters and querystring.`, () => {
-			/*eslint-enable */
+		})
+		it('03 - Should support simple single routing with parameters and querystring.', () => {
 			const req_01 = httpMocks.createRequest({
 				method: 'GET',
 				headers: {
@@ -132,13 +120,8 @@ describe('app', () =>
 			})
 
 			return Promise.all([result_01, result_02, result_03])
-		})))
-
-/*eslint-disable */
-describe('app', () => 
-	describe('#handleEvent: 04', () => 
-		it(`Should support complex routing with parameters and querystring.`, () => {
-			/*eslint-enable */
+		})
+		it('04 - Should support complex routing with parameters and querystring.', () => {
 			const req_01 = httpMocks.createRequest({
 				method: 'GET',
 				headers: {
@@ -175,13 +158,8 @@ describe('app', () =>
 			})
 
 			return Promise.all([result_01, result_02])
-		})))
-
-/*eslint-disable */
-describe('app', () => 
-	describe('#handleEvent: 05', () => 
-		it(`Should accept any http method with 'app.all'.`, () => {
-			/*eslint-enable */
+		})
+		it('05 - Should accept any http method with \'app.all\'.', () => {
 			const req_01 = httpMocks.createRequest({
 				method: 'GET',
 				headers: {
@@ -216,13 +194,8 @@ describe('app', () =>
 			})
 
 			return Promise.all([result_01, result_02])
-		})))
-
-/*eslint-disable */
-describe('app', () => 
-	describe('#handleEvent: 06', () => 
-		it(`Should support custom HttpHandler`, () => {
-			/*eslint-enable */
+		})
+		it('06 - Should support custom HttpHandler', () => {
 			const req_01 = httpMocks.createRequest({
 				method: 'GET',
 				headers: {
@@ -269,13 +242,8 @@ describe('app', () =>
 			})
 
 			return Promise.all([result_01, result_02])
-		})))
-
-/*eslint-disable */
-describe('app', () => 
-	describe('#handleEvent: 07', () => 
-		it(`Should support chain of HttpHandlers.`, () => {
-			/*eslint-enable */
+		})
+		it('07 - Should support chain of HttpHandlers.', () => {
 			const req_01 = httpMocks.createRequest({
 				method: 'GET',
 				headers: {
@@ -308,13 +276,8 @@ describe('app', () =>
 			})
 
 			return Promise.all([result_01])
-		})))
-
-/*eslint-disable */
-describe('app', () => 
-	describe('#handleEvent: 08', () => 
-		it(`Should support any path if no path have been defined in any route.`, () => {
-			/*eslint-enable */
+		})
+		it('08 - Should support any path if no path have been defined in any route.', () => {
 			const req_01 = httpMocks.createRequest({
 				method: 'GET',
 				headers: {
@@ -351,13 +314,8 @@ describe('app', () =>
 			})
 
 			return Promise.all([result_01, result_02])
-		})))
-
-/*eslint-disable */
-describe('app', () => 
-	describe('#handleEvent: 09', () => 
-		it(`Should support collection of routes for a single response type.`, () => {
-			/*eslint-enable */
+		})
+		it('09 - Should support collection of routes for a single response type.', () => {
 			const req_01 = httpMocks.createRequest({
 				method: 'GET',
 				headers: {
@@ -394,13 +352,8 @@ describe('app', () =>
 			})
 
 			return Promise.all([result_01, result_02])
-		})))
-
-/*eslint-disable */
-describe('app', () => 
-	describe('#handleEvent: 10', () => 
-		it('Should capture the body of a POST request and interpret it as a JSON in the params argument.', () => {
-			/*eslint-enable */
+		})
+		it('10 - Should capture the body of a POST request and interpret it as a JSON in the params argument.', () => {
 			const req = httpMocks.createRequest({
 				method: 'POST',
 				headers: {
@@ -426,13 +379,8 @@ describe('app', () =>
 				assert.equal(res.statusCode, 200)
 				assert.equal(res._getData(), 'Action create. The secret password of nic is 1234')
 			})
-		})))
-
-/*eslint-disable */
-describe('app', () => 
-	describe('#handleEvent: 11', () => 
-		it(`Should not extract any parameters from the payload or the route when the 'paramsMode' property of the now.json config is set to 'none'.`, () => {
-			/*eslint-enable */
+		})
+		it('11 - Should not extract any parameters from the payload or the route when the \'paramsMode\' property of the now.json config is set to \'none\'.', () => {
 			const req = httpMocks.createRequest({
 				method: 'POST',
 				headers: {
@@ -462,13 +410,8 @@ describe('app', () =>
 				assert.equal(res.statusCode, 200)
 				assert.equal(res._getData(), 'Action undefined. The secret password of undefined is undefined')
 			})
-		})))
-
-/*eslint-disable */
-describe('app', () => 
-	describe('#handleEvent: 12', () => 
-		it(`Should not extract any route parameters when the 'paramsMode' property of the now.json config is set to 'body'.`, () => {
-			/*eslint-enable */
+		})
+		it('12 - Should not extract any route parameters when the \'paramsMode\' property of the now.json config is set to \'body\'.', () => {
 			const req = httpMocks.createRequest({
 				method: 'POST',
 				headers: {
@@ -498,13 +441,8 @@ describe('app', () =>
 				assert.equal(res.statusCode, 200)
 				assert.equal(res._getData(), 'Action undefined. The secret password of nic is 1234')
 			})
-		})))
-
-/*eslint-disable */
-describe('app', () => 
-	describe('#handleEvent: 13', () => 
-		it(`Should not extract any body parameters when the 'paramsMode' property of the now.json config is set to 'route'.`, () => {
-			/*eslint-enable */
+		})
+		it('13 - Should not extract any body parameters when the \'paramsMode\' property of the now.json config is set to \'route\'.', () => {
 			const req = httpMocks.createRequest({
 				method: 'POST',
 				headers: {
@@ -534,13 +472,8 @@ describe('app', () =>
 				assert.equal(res.statusCode, 200)
 				assert.equal(res._getData(), 'Action create. The secret password of undefined is undefined')
 			})
-		})))
-
-/*eslint-disable */
-describe('app', () => 
-	describe('#handleEvent: 14', () => 
-		it(`Should add metadata '__transactionId', '__receivedTime' and '__ellapsedMillis()' to the request object.`, () => {
-			/*eslint-enable */
+		})
+		it('14 - Should add metadata \'__transactionId\', \'__receivedTime\' and \'__ellapsedMillis()\' to the request object.', () => {
 			const req = httpMocks.createRequest({
 				method: 'POST',
 				headers: {
@@ -582,13 +515,8 @@ describe('app', () =>
 				}
 				assert.isOk(req.__ellapsedMillis() - t1 > 0, '__ellapsedMillis() should grow monotonously')
 			})
-		})))
-
-/*eslint-disable */
-describe('app', () => 
-	describe('#handleEvent: 15', () => 
-		it(`Should support preEvent and postEvent handler.`, () => {
-			/*eslint-enable */
+		})
+		it('15 - Should support preEvent and postEvent handler.', () => {
 			const req_01 = httpMocks.createRequest({
 				method: 'GET',
 				headers: {
@@ -624,13 +552,8 @@ describe('app', () =>
 			})
 
 			return Promise.all([result_01])
-		})))
-
-/*eslint-disable */
-describe('app', () => 
-	describe('#handleEvent: 16', () => 
-		it(`Should support an undetermined number of middleware for a specific endpoint.`, () => {
-			/*eslint-enable */
+		})
+		it('16 - Should support an undetermined number of middleware for a specific endpoint.', () => {
 			const req_01 = httpMocks.createRequest({
 				method: 'GET',
 				headers: {
@@ -686,13 +609,8 @@ describe('app', () =>
 			})
 
 			return Promise.all([result_01, result_02])
-		})))
-
-/*eslint-disable */
-describe('app', () => 
-	describe('#handleEvent: 17', () => 
-		it(`Should support custom 'params' property name (e.g. from the default req.params to your req.myOwnWhatever ).`, () => {
-			/*eslint-enable */
+		})
+		it('17 - Should support custom \'params\' property name (e.g. from the default req.params to your req.myOwnWhatever ).', () => {
 			const req_01 = httpMocks.createRequest({
 				method: 'GET',
 				headers: {
@@ -751,14 +669,12 @@ describe('app', () =>
 			})
 
 			return Promise.all([result_01, result_02, result_03])
-		})))
+		})
+	})
 
-/*eslint-disable */
-describe('app', () => 
-	describe('#createGCPRequestResponse: #1', () => 
-		it(`Should convert a Google event to an HTTP request object.`, () => {
+	describe('#createGCPRequestResponse', () => {
+		it('01 - Should convert a Google event to an HTTP request object.', () => {
 			const body = new Buffer('This is an awesome message').toString('base64')
-			/*eslint-enable */
 			const event = {
 				data: {
 					attributes: {
@@ -781,14 +697,9 @@ describe('app', () =>
 			assert.equal(req._parsedUrl.pathname, '/users', 'Pathname should be \'/users\'.')
 			assert.equal(req.body, 'This is an awesome message', 'body should be \'This is an awesome message\'.')
 			assert.equal(req.__event.data.attributes.user.firstName, 'Nic')
-		})))
-
-/*eslint-disable */
-describe('app', () => 
-	describe('#createGCPRequestResponse: #2', () => 
-		it(`Should convert a Google event to an HTTP request object.`, () => {
+		})
+		it('02 - Should convert a Google event to an HTTP request object.', () => {
 			const body = new Buffer('').toString('base64')
-			/*eslint-enable */
 			const event = {
 				data: {
 					attributes: {
@@ -814,13 +725,11 @@ describe('app', () =>
 				assert.equal(res.statusCode, 200)
 				assert.equal(res._getData(), 'Hello Nic Dao (id: 1).')
 			})
-		})))
+		})
+	})
 
-/*eslint-disable */
-describe('app', () => 
-	describe('#createAWSRequestResponse', () => 
-		it(`Should convert an AWS event to an HTTP request object.`, () => {
-			/*eslint-enable */
+	describe('#createAWSRequestResponse', () => {
+		it('01 - Should convert an AWS event to an HTTP request object.', () => {
 			const event = {
 				firstName: 'Nic',
 				lastName: 'Dao',
@@ -844,13 +753,11 @@ describe('app', () =>
 			assert.equal(req.body.pwd, '1234')
 			assert.equal(req.url, '/users/tony?name=Nico')
 			assert.equal(req.__event.queryStringParameters.name, 'Nico')
-		})))
+		})
+	})
 
-/*eslint-disable */
-describe('app', () => 
-	describe('#createAWSResponse', () => 
-		it(`Should convert an AWS event to a request/response object and then convert the response back to an AWS response.`, () => {
-			/*eslint-enable */
+	describe('#createAWSResponse', () => {
+		it('01 - Should convert an AWS event to a request/response object and then convert the response back to an AWS response.', () => {
 			const event = {
 				firstName: 'Nic',
 				lastName: 'Dao'
@@ -875,13 +782,11 @@ describe('app', () =>
 				assert.equal(headers['access-control-expose-headers'], 'Authorization, Content-Type, Origin')
 				assert.equal(headers['access-control-allow-origin'], 'null')
 			})
-		})))
+		})
+	})
 
-/*eslint-disable */
-describe('app', () => 
-	describe('#on', () => 
-		it(`Should intercept events 'onSend', 'onHeaders' and 'onStatus'.`, () => {
-			/*eslint-enable */
+	describe('#on', () => {
+		it('01 - Should intercept events \'onSend\', \'onHeaders\' and \'onStatus\'.', () => {
 			const req = httpMocks.createRequest({
 				method: 'POST',
 				headers: {
@@ -930,9 +835,9 @@ describe('app', () =>
 				assert.equal(res.statusCode, 200)
 				assert.equal(res._getData(), correctVal)
 			})
-		})))
-
-
+		})
+	})
+})
 
 
 

@@ -154,7 +154,22 @@ const app = {
 		}
 	},
 	handleEvent: () => (req, res) => processEvent(req, res, _config, _endpoints, _handlers, _preEvent, _postEvent),
-	listen: (appName, port, fn) => {
+	listen: (...args) => {
+		const [appName, port, fn] = (() => {
+			const l = args.length
+			if (l >= 3) 
+				return args 
+			else if (l == 2) {
+				if (typeof(args[1]) == 'function')
+					return ['app', ...args]
+				else
+					return args
+			} else if (l == 1) 
+				return ['app', args[0]]
+			else
+				return []
+		})()
+
 		const input = createListenArity(appName, port, 3000)
 		const hostingType = getProvider()
 		if (!HOSTINGS[hostingType.toLowerCase()])
@@ -271,9 +286,9 @@ const createListenArity = (arg1, arg2, defaultPort=3000) => {
 	if (arg1 != undefined && arg2 != undefined) {
 		arg2 = arg2 * 1
 		if (typeof(arg1) != 'string')
-			throw new Error(`Wrong argument exception. When 2 arguments are passed to \'listen\', the first one must be a string. ${JSON.stringify({ arg1, arg2, defaultPort }, null, ' ')}`)
+			throw new Error(`Wrong argument exception. When 2 arguments are passed to 'listen', the first one must be a string. ${JSON.stringify({ arg1, arg2, defaultPort }, null, ' ')}`)
 		if (typeof(arg2) != 'number')
-			throw new Error(`Wrong argument exception. When 2 arguments are passed to \'listen\', the second one must be a number. ${JSON.stringify({ arg1, arg2, defaultPort }, null, ' ')}`)
+			throw new Error(`Wrong argument exception. When 2 arguments are passed to 'listen', the second one must be a number. ${JSON.stringify({ arg1, arg2, defaultPort }, null, ' ')}`)
 		return { appName: arg1, port: arg2 }
 	}
 	// Case 2: 1 Argument

@@ -32,7 +32,6 @@
   },
   "homepage": "https://github.com/neapjs/funky#readme",
   "dependencies": {
-    "append-query": "^2.0.1",
     "colors": "^1.1.2",
     "express": "^4.16.2",
     "http-errors": "^1.6.1",
