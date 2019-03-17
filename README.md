@@ -10,7 +10,7 @@ const { app } = require('@neap/funky')
 
 app.get('/users/:username', (req, res) => res.status(200).send(`Hello ${req.params.username}`))
 
-eval(app.listen('app', 4000))
+eval(app.listen(4000))
 ```  
 
 __*[Webfunc](https://github.com/nicolasdao/webfunc) supports [Express middleware](#compatible-with-all-express-middleware)*__. 
@@ -85,7 +85,7 @@ const { app } = require('webfunc')
 
 app.get('/users/:username', (req, res) => res.status(200).send(`Hello ${req.params.username}`))
 
-eval(app.listen('app', 4000))
+eval(app.listen(4000))
 ```  
 >More details on why `eval` is used under [What does webfunc use eval() to start the server?](#what-does-webfunc-use-eval-to-start-the-server) in the [FAQ](#faq).
 
@@ -193,7 +193,7 @@ const { app } = require('webfunc')
 
 app.get('/users/:username', (req, res) => res.status(200).send(`Hello ${req.params.username}`))
 
-eval(app.listen('app', 4000))
+eval(app.listen(4000))
 ```  
 
 To run this code locally, simply run in your terminal:
@@ -231,7 +231,7 @@ app.post('/login', (req, res, params={}) => {
 // 5. Supports route for any http verb.
 app.all('/', (req, res) => res.status(200).send('Welcome to this awesome API!'))
 
-eval(app.listen('app', 4000))
+eval(app.listen(4000))
 ``` 
 
 Notice that in all the cases above, the `req.params` argument contains any parameters that are either passed in the route or in the payload. This scenario is so common that webfunc automatically supports that feature. No need to install any middleware like [body-parser](https://github.com/expressjs/body-parser). Webfunc can even automatically parse __*multipart/form-data*__ content type usually used to upload files (e.g. images, documents, ...). More details under [Uploading Images](#uploading-files--images) in the [Use Cases](#use-cases) section.
@@ -260,7 +260,7 @@ app.get('/users/:username', (req, res) =>
 app.get('/users/:username/account/:accountId', (req, res) => 
   res.status(200).send(`Hello ${req.params.username} (account: ${req.params.accountId})`))
 
-eval(app.listen('app', 4000))
+eval(app.listen(4000))
 ```
 
 The snippet above demonstrate how to use the Express middleware [response-time](https://github.com/expressjs/response-time). This middleware measures the time it takes for your server to process a request. It will add a new response header called __X-Response-Time__. In this example, all APIs will be affected. 
@@ -278,7 +278,7 @@ app.get('/users/:username', responseTime(), (req, res) =>
 app.get('/users/:username/account/:accountId', (req, res) => 
   res.status(200).send(`Hello ${req.params.username} (account: ${req.params.accountId})`))
 
-eval(app.listen('app', 4000))
+eval(app.listen(4000))
 ```
 
 In the snippet above, the _response-time_ will only affect the first API.
@@ -303,7 +303,7 @@ app.get('/users/:username', (req, res) =>
 app.get('/users/:username/account/:accountId', (req, res) => 
   res.status(200).send(`Hello ${req.params.username} (account: ${req.params.accountId})`))
 
-eval(app.listen('app', 4000))
+eval(app.listen(4000))
 ```
 
 ### Chaining Multiple Middleware On a Specific Endpoint
@@ -338,7 +338,7 @@ const middleware = [doSomething, doSomethingElse]
 app.get('/', ...middleware.concat((req, res) => 
   res.status(200).send(`Hello ${req.params.part_1} ${req.params.part_2}`)))
 
-eval(app.listen('app', 4000))
+eval(app.listen(4000))
 ```
 
 ## Managing Environment Variables Per Deployment
@@ -397,7 +397,7 @@ app.get('/users/:username', (req, res) => {
   res.status(200).send(`Hello ${req.params.username}`)
 })
 
-eval(app.listen('app', 4000))
+eval(app.listen(4000))
 ```
 
 ## Reacting To Google PubSub Topics
@@ -475,7 +475,7 @@ Because Express has become such a familiar tool, our team decided to embrace its
     })
   })
 
-  eval(app.listen('app', 4000))
+  eval(app.listen(4000))
   ```
 
 >IMPORTANT: When it comes to create a webfunc function reacting to events other than HTTP requests, only POST  methods are allowed.
@@ -648,7 +648,7 @@ app.post('/signin', (req, res) => {
 // This api requires authentication. You must pass a header names "Authorization"
 app.get('/', authenticate(), (req, res) => res.status(200).send(`Welcome ${req.params.user.username}!`))
 
-eval(app.listen('app', 4000))
+eval(app.listen(4000))
 ```
 
 To test that piece of code:
@@ -702,7 +702,7 @@ app.post('/upload', (req, res) =>
   .catch(err => res.status(500).send(err.message))
 )
 
-eval(app.listen('app', 4000))
+eval(app.listen(4000))
 ```
 
 You can test this code locally by using [Postman](https://www.getpostman.com/) as follow:
@@ -755,7 +755,7 @@ const graphqlOptions = {
 // The GraphQL api
 app.all(['/', '/graphiql'], graphqlHandler(graphqlOptions))
 
-eval(app.listen('app', 4000))
+eval(app.listen(4000))
 ```
 
 # Configuration
@@ -785,7 +785,7 @@ app.get('/products/:id', globalAccess, (req, res) => res.status(200).send(`This 
 app.options('/users/:username', restrictedAccess)
 app.get('/users/:username', restrictedAccess, (req, res) => res.status(200).send(`Hello ${req.params.username}`))
 
-eval(app.listen('app', 4000))
+eval(app.listen(4000))
 ```
 
 >CORS is a classic source of headache. Though webfunc allows to easily configure any project, it will not prevent you to badly configure a project, and therefore loose a huge amount of time. For that reason, a series of common mistakes have been documented in the [Annexes](#annexes) section under [A.2. CORS Basic Errors](#a2-cors-basic-errors).
@@ -979,7 +979,7 @@ app.post((req, res) => {
   console.log(`Hello ${req.params.firstName}`)
 })
 
-eval(app.listen('app', 4000))
+eval(app.listen(4000))
 ``` 
 
 As for any webfunc app, the parameters passed the request will be in the `req.params` object. 
@@ -988,14 +988,14 @@ As for any webfunc app, the parameters passed the request will be in the `req.pa
 
 # FAQ
 ## What does webfunc use eval() to start the server?
-You should have noticed that all the snippets above end up with `eval(app.listen('app', 4000))`. The main issue webfunc tackles is to serve endpoints using a uniform API regardless of the serverless hosting platform. This is indeed a challenge as different platforms use different convention. [Zeit Now](https://zeit.co/now) uses a standard [Express](https://expressjs.com/) server, which means that the api to start the server is similar to `app.listen()`. However, with FaaS ([Google Cloud Functions](https://cloud.google.com/functions/), [AWS Lambdas](https://aws.amazon.com/lambda), ...), there is no server to be started. The server lifecycle is automatically managed by the 3rd party. The only piece of code you need to write is a handler function similar to `exports.handler = (req, res) => res.status(200).send('Hello world')`. In order to manage those 2 main scenarios, webfunc generate the code to be run as a string, and evaluate it using `eval()`. You can easily inspect the code as follow:
+You should have noticed that all the snippets above end up with `eval(app.listen(4000))`. The main issue webfunc tackles is to serve endpoints using a uniform API regardless of the serverless hosting platform. This is indeed a challenge as different platforms use different convention. [Zeit Now](https://zeit.co/now) uses a standard [Express](https://expressjs.com/) server, which means that the api to start the server is similar to `app.listen()`. However, with FaaS ([Google Cloud Functions](https://cloud.google.com/functions/), [AWS Lambdas](https://aws.amazon.com/lambda), ...), there is no server to be started. The server lifecycle is automatically managed by the 3rd party. The only piece of code you need to write is a handler function similar to `exports.handler = (req, res) => res.status(200).send('Hello world')`. In order to manage those 2 main scenarios, webfunc generate the code to be run as a string, and evaluate it using `eval()`. You can easily inspect the code as follow:
 
 ```js
 const { app } = require('webfunc')
 
 app.get('/users/:username', (req, res) => res.status(200).send(`Hello ${req.params.username}`))
 
-const code = app.listen('app', 4000)
+const code = app.listen(4000)
 console.log(eval(code))
 eval(code)
 ```  
