@@ -11,7 +11,7 @@ const { app, cors } = require('../src/index')
 
 describe('app', () => {
 	describe('#handleEvent', () => {
-		it('01- Should support one endpoint definition.', () => {
+		it('01 - Should support one endpoint definition.', () => {
 			const req_01 = httpMocks.createRequest({
 				method: 'GET',
 				headers: {
@@ -380,7 +380,7 @@ describe('app', () => {
 				assert.equal(res._getData(), 'Action create. The secret password of nic is 1234')
 			})
 		})
-		it('11 - Should not extract any parameters from the payload or the route when the \'paramsMode\' property of the now.json config is set to \'none\'.', () => {
+		it('11 - Should not extract any parameters from the payload or the route when the \'paramsMode\' property of the app.json config is set to \'none\'.', () => {
 			const req = httpMocks.createRequest({
 				method: 'POST',
 				headers: {
@@ -411,7 +411,7 @@ describe('app', () => {
 				assert.equal(res._getData(), 'Action undefined. The secret password of undefined is undefined')
 			})
 		})
-		it('12 - Should not extract any route parameters when the \'paramsMode\' property of the now.json config is set to \'body\'.', () => {
+		it('12 - Should not extract any route parameters when the \'paramsMode\' property of the app.json config is set to \'body\'.', () => {
 			const req = httpMocks.createRequest({
 				method: 'POST',
 				headers: {
@@ -442,7 +442,7 @@ describe('app', () => {
 				assert.equal(res._getData(), 'Action undefined. The secret password of nic is 1234')
 			})
 		})
-		it('13 - Should not extract any body parameters when the \'paramsMode\' property of the now.json config is set to \'route\'.', () => {
+		it('13 - Should not extract any body parameters when the \'paramsMode\' property of the app.json config is set to \'route\'.', () => {
 			const req = httpMocks.createRequest({
 				method: 'POST',
 				headers: {

@@ -10,7 +10,7 @@ const httpMocks = require('node-mocks-http')
 const { app, cors } = require('../src/index')
 
 describe('cors', () => {
-	it('01- Should set the response\'s origin header to the request\'s origin if it matches the configured list in CORS.', () => {
+	it('01 - Should set the response\'s origin header to the request\'s origin if it matches the configured list in CORS.', () => {
 		const req = httpMocks.createRequest({
 			method: 'GET',
 			headers: {
@@ -205,6 +205,27 @@ describe('cors', () => {
 		})
 
 		return Promise.all([result_01, result_02])
+	})
+	it('07 - Should support parameterless CORS setup.', () => {
+		const req = httpMocks.createRequest({
+			method: 'GET',
+			headers: {
+				origin: 'http://localhost:8080',
+				referer: 'http://localhost:8080'
+			}
+		})
+		const res = httpMocks.createResponse()
+		const corsSetup = cors()
+
+		app.reset()
+		app.all(corsSetup, (req, res) => res.status(200).send('Hello World'))
+		return app.handleEvent()(req, res).then(() => {
+			assert.isOk(req)
+			assert.equal(res._getData(),'Hello World')
+			const headers = res._getHeaders()
+			assert.isOk(headers)
+			assert.equal(headers['access-control-allow-origin'], 'http://localhost:8080')
+		})
 	})
 })
 
