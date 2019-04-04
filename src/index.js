@@ -9,8 +9,8 @@ const fs = require('fs')
 const shortid = require('shortid')
 const path = require('path')
 const { getRouteDetails, matchRoute } = require('./routing')
-const { reqUtil } = require('./utils')
-const { cors } = require('./cors')
+const { legacy:legacyUtils } = require('./utils')
+const { cors, static:staticHandler } = require('./handlers')
 require('colors')
 
 /*eslint-disable */
@@ -81,8 +81,12 @@ const app = {
 		if (!handlerOrConfig)
 			throw new Error('Missing required argument. The \'use\' function requires one argument.')
 		const inputType = typeof(handlerOrConfig)
-		if (inputType == 'function')
-			_handlers.push(fnToPromise(handlerOrConfig))
+		if (inputType == 'function') {
+			if (handlerOrConfig.type == 'static' && handlerOrConfig.config)
+				handlerOrConfig.config({ 'get': (...args) => createEndpoint(args, 'GET') })
+			else
+				_handlers.push(fnToPromise(handlerOrConfig))
+		}
 		else if (inputType == 'object')
 			resetConfig(Object.assign(_config, handlerOrConfig))
 		else
@@ -258,9 +262,9 @@ const app = {
 			}
 		}
 	},
-	createGCPRequestResponse: event => reqUtil.createGCPRequestResponse(event, ((_config || {}).params || {}).propName || 'params'),
-	createAWSRequestResponse: event => reqUtil.createAWSRequestResponse(event, ((_config || {}).params || {}).propName || 'params'),
-	createAWSResponse: reqUtil.createAWSResponse
+	createGCPRequestResponse: event => legacyUtils.createGCPRequestResponse(event, ((_config || {}).params || {}).propName || 'params'),
+	createAWSRequestResponse: event => legacyUtils.createAWSRequestResponse(event, ((_config || {}).params || {}).propName || 'params'),
+	createAWSResponse: legacyUtils.createAWSResponse
 }
 
 /**
@@ -475,7 +479,7 @@ const processEvent = (req, res, config={}, endpoints=[], handlers=[], preEvent, 
 				const paramts = validParamsMode == 'all' || validParamsMode == 'route' ? Object.assign({}, endpoint.winningRoute.parameters) : {}
 				debug(config, `- Extracting paramaters from the request object (mode: ${validParamsMode}).`)
 				const getParams = validParamsMode == 'all' || validParamsMode == 'body' 
-					? reqUtil.getParams(req, (...args) => debug(config, ...args)) 
+					? legacyUtils.getParams(req, (...args) => debug(config, ...args)) 
 					: Promise.resolve({})
 				return getParams.then(parameters => Object.assign(parameters, paramts))
 					.then(parameters => {
@@ -562,6 +566,7 @@ const extendResponse = (req, res) => {
 module.exports = {
 	app,
 	cors,
+	static:staticHandler,
 	get appConfig() { return getAppJson() }
 }
 

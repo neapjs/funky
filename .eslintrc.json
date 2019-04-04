@@ -11,7 +11,8 @@
     "globals": {
         "describe": false,
         "it": false,
-        "Buffer": false
+        "Buffer": false,
+        "process": false
     },
     "rules": {
         "no-console":0,

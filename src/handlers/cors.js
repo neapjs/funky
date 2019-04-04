@@ -73,4 +73,4 @@ const cors = (config) => {
 	}
 }
 
-module.exports = { cors }
+module.exports = cors

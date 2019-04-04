@@ -215,11 +215,9 @@ const createAWSResponse = (res={}) => {
 //         body: JSON.stringify(responseBody)
 
 module.exports = {
-	reqUtil: {
-		appendQuery,
-		getParams,
-		createGCPRequestResponse,
-		createAWSRequestResponse,
-		createAWSResponse
-	}
+	appendQuery,
+	getParams,
+	createGCPRequestResponse,
+	createAWSRequestResponse,
+	createAWSResponse
 }

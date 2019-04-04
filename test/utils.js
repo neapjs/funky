@@ -6,7 +6,7 @@
  * LICENSE file in the root directory of this source tree.
 */
 const { assert } = require('chai')
-const { reqUtil: { appendQuery } } = require('../src/utils')
+const { legacy: { appendQuery } } = require('../src/utils')
 
 describe('utils', () => {
 	describe('#appendQuery', () => {
