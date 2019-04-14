@@ -9,7 +9,7 @@ const staticHandler = (...args) => {
 	handler.type = 'static'
 	handler.config = app => co(function *() {
 		const folderPath = resolve(folder)
-		const _files = (yield files.get(folderPath)) || []
+		const _files = (yield files.get(folderPath, { pattern:'**/*.*' })) || []
 		_files.forEach(f => app.get(f.replace(folderPath,''),handler))
 	})
 	return handler
