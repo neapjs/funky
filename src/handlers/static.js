@@ -1,6 +1,6 @@
 const co = require('co')
 const { static:expressStatic } = require('express')
-const { join } = require('path')
+const { resolve } = require('path')
 const { files } = require('../utils')
 
 const staticHandler = (...args) => {
@@ -8,7 +8,7 @@ const staticHandler = (...args) => {
 	let handler = expressStatic(...args)
 	handler.type = 'static'
 	handler.config = app => co(function *() {
-		const folderPath = join(process.cwd(), folder)
+		const folderPath = resolve(folder)
 		const _files = (yield files.get(folderPath)) || []
 		_files.forEach(f => app.get(f.replace(folderPath,''),handler))
 	})
