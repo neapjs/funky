@@ -201,13 +201,14 @@ const app = {
 				__server__.all('*', ${input.appName}.handleEvent())
 				const __ws__ = __createServer__(__server__)
 				${input.appName}.server = __ws__
-				__ws__.listen(${input.port}, () => { 
+				const __app__ = __ws__.listen(${input.port}, () => { 
 					console.log("${startMessage}")
 					${secondMsg ? `console.log("${secondMsg}")` : ''}
 					${fn ? `
 					const __fn__ = ${fn.toString()}
 					__fn__()` : ''}
 				})
+				${input.appName}.close = __app__.close
 			}
 			`
 
