@@ -208,7 +208,6 @@ const app = {
 					const __fn__ = ${fn.toString()}
 					__fn__()` : ''}
 				})
-				${input.appName}.close = __app__.close
 			}
 			`
 
