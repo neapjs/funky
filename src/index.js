@@ -159,7 +159,7 @@ const app = {
 	},
 	handleEvent: () => (req, res) => processEvent(req, res, _config, _endpoints, _handlers, _preEvent, _postEvent),
 	listen: (...args) => {
-		const [appName, port, fn] = (() => {
+		const [appName, port, fn, silent=false,native=false] = (() => {
 			const l = args.length
 			if (l >= 3) 
 				return args 
@@ -168,8 +168,16 @@ const app = {
 					return ['app', ...args]
 				else
 					return args
-			} else if (l == 1) 
+			} else if (l == 1) {
+				if (typeof(args[0]) == 'object') {
+					const { appName='app', port, fn, silent=false, native=false } = args[0]
+					if (!port)
+						throw new Error('Missing required argument \'port\'')
+
+					return [appName,port,fn,silent,native]
+				}
 				return ['app', args[0]]
+			}
 			else
 				return []
 		})()
@@ -201,8 +209,8 @@ const app = {
 			const __ws__ = __createServer__(__server__)
 			${input.appName}.server = __ws__
 			const __app__ = __ws__.listen(${input.port}, () => { 
-				console.log("${startMessage}")
-				${secondMsg ? `console.log("${secondMsg}")` : ''}
+				${!silent ? `console.log("${startMessage}")` : '' }
+				${!silent && secondMsg ? `console.log("${secondMsg}")` : ''}
 				${fn ? `
 				const __fn__ = ${fn.toString()}
 				__fn__()` : ''}
@@ -210,7 +218,7 @@ const app = {
 			`
 
 		// Normal Express Server Setup
-		if (!input.appName) {
+		if (native) {
 			const __express__ = require('express')
 			const { createServer: __createServer__ } = require('http')
 			const __server__ = __express__()
@@ -218,9 +226,11 @@ const app = {
 			const __ws__ = __createServer__(__server__)
 			_server = __ws__
 			__ws__.listen(input.port, () => { 
-				console.log(startMessage)
-				if (secondMsg)
-					console.log(secondMsg)
+				if (!silent) {
+					console.log(startMessage)
+					if (secondMsg)
+						console.log(secondMsg)
+				}
 				if (fn)
 					fn()
 			})
