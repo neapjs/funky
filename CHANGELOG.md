@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.2.8"></a>
+## [0.2.8](https://github.com/neapjs/funky/compare/v0.2.7...v0.2.8) (2019-04-23)
+
+
+### Bug Fixes
+
+* Running app.listen outside of the main js file does not start the server ([722775f](https://github.com/neapjs/funky/commit/722775f))
+
+
+
 <a name="0.2.7"></a>
 ## [0.2.7](https://github.com/neapjs/funky/compare/v0.2.6...v0.2.7) (2019-04-21)
 
