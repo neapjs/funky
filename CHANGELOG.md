@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.3.0"></a>
+# [0.3.0](https://github.com/neapjs/funky/compare/v0.2.8...v0.3.0) (2019-04-23)
+
+
+### Features
+
+* Add support for a new signature on the app.listen api ([9cb6965](https://github.com/neapjs/funky/commit/9cb6965))
+
+
+
 <a name="0.2.8"></a>
 ## [0.2.8](https://github.com/neapjs/funky/compare/v0.2.7...v0.2.8) (2019-04-23)
 
