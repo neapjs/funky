@@ -194,21 +194,19 @@ const app = {
 		}
 
 		const commonScript = `
-			if (require.main === module) {
-				const __express__ = require('express')
-				const { createServer: __createServer__ } = require('http')
-				const __server__ = __express__()
-				__server__.all('*', ${input.appName}.handleEvent())
-				const __ws__ = __createServer__(__server__)
-				${input.appName}.server = __ws__
-				const __app__ = __ws__.listen(${input.port}, () => { 
-					console.log("${startMessage}")
-					${secondMsg ? `console.log("${secondMsg}")` : ''}
-					${fn ? `
-					const __fn__ = ${fn.toString()}
-					__fn__()` : ''}
-				})
-			}
+			const __express__ = require('express')
+			const { createServer: __createServer__ } = require('http')
+			const __server__ = __express__()
+			__server__.all('*', ${input.appName}.handleEvent())
+			const __ws__ = __createServer__(__server__)
+			${input.appName}.server = __ws__
+			const __app__ = __ws__.listen(${input.port}, () => { 
+				console.log("${startMessage}")
+				${secondMsg ? `console.log("${secondMsg}")` : ''}
+				${fn ? `
+				const __fn__ = ${fn.toString()}
+				__fn__()` : ''}
+			})
 			`
 
 		// Normal Express Server Setup
@@ -234,18 +232,24 @@ const app = {
 				return commonScript
 			case 'google-function':
 				return `
-				${commonScript}
+				if (require.main === module) {
+					${commonScript}
+				}
 				exports.handler = ${input.appName}.handleEvent()`
 			case 'gcp_event':
 				return `
-				${commonScript}
+				if (require.main === module) {
+					${commonScript}
+				}
 				exports.handler = (event, next) => {	
 					const { req, res } = ${input.appName}.createGCPRequestResponse(event)
 					${input.appName}.handleEvent()(req, res).then(() => next())
 				}`
 			case 'aws':
 				return `
-				${commonScript}
+				if (require.main === module) {
+					${commonScript}
+				}
 				exports.handler = (event, context, next) => {	
 					const { req, res } = ${input.appName}.createAWSRequestResponse(event)
 					${input.appName}.handleEvent()(req, res)
