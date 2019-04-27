@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.4.0"></a>
+# [0.4.0](https://github.com/neapjs/funky/compare/v0.3.0...v0.4.0) (2019-04-27)
+
+
+### Features
+
+* Method:'staticHandler'. Add support for defining default page when URI such as https//neap.co are specified ([db08e67](https://github.com/neapjs/funky/commit/db08e67))
+
+
+
 <a name="0.3.0"></a>
 # [0.3.0](https://github.com/neapjs/funky/compare/v0.2.8...v0.3.0) (2019-04-23)
 
