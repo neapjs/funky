@@ -708,17 +708,32 @@ eval(app.listen(4000))
 >CORS is a classic source of headache. Though webfunc allows to easily configure any project, it will not prevent you to badly configure a project, and therefore loose a huge amount of time. For that reason, a series of common mistakes have been documented in the [Annexes](#annexes) section under [A.2. CORS Basic Errors](#a2-cors-basic-errors).
 
 ## Static Website
-
+### Basic
 ```js
-const { app, static:staticHandler } = require('../src')
-const app = funky.app
+const { app, static:staticHandler } = require('@neap/funky')
 
 app.use(staticHandler('dist'))
 
 eval(app.listen(3000))
 ```
 
-Where `'dist'` is the folder in your current working directory that contains static website files.
+Where `'dist'` is the folder in your current working directory that contains static website files. 
+
+> IMPORTANT: To serve the current working directory, use `'./'`. __DO NOT USE `/`__.
+
+### Serving Specific Files Only
+
+The `static` handler supports globbing patterns to both select or ignore certain files:
+
+```js
+const { app, static:staticHandler } = require('@neap/funky')
+
+app.use(staticHandler('./', { pattern:['*.html', '**/*.js'], ignore:['test.html'] }))
+
+eval(app.listen(3000))
+```
+
+The above snippet includes all the `.html` files directly located under the current working directory (but not the `.html` files under sub-directories) and all the `.js` files (including all the javascript files under all the sub-directories). The snippet explicitly ignore the `test.html` file. 
 
 ## Disabling Body Or Route Parsing
 Webfunc's default behavior is to parse both the payload and any variables found in the route into a JSON object (see [previous example](#multiple-endpoints)). Based on certain requirements, it might be necessary to disable that behavior (e.g. trying to read the payload again in your app might not work after webfunc has parsed it). 

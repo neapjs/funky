@@ -1,13 +1,6 @@
 const fs = require('fs')
 const { join } = require('path')
-const _glob = require('glob')
-
-const glob = (pattern, options) => new Promise((success, failure) => _glob(pattern, options, (err, files) => {
-	if (err)
-		failure(err)
-	else
-		success(files)
-}))
+const fg = require('fast-glob')
 	
 /**
  * Checks if a file or folder exists
@@ -18,17 +11,21 @@ const glob = (pattern, options) => new Promise((success, failure) => _glob(patte
 const fileExists = p => new Promise(onSuccess => fs.exists(p, yes => onSuccess(yes ? true : false)))
 
 /**
- * [description]
- * @param  {String} 			src     			Absolute path to folder
- * @param  {String} 			options.pattern 	Default is '*.*' which means all immediate files. 
- * @param  {String} 			options.ignore 		[description]
- * @return {Promise<[String]>}         				
+ * Gets an array of files located under the 'folderPath'. 
+ * 
+ * @param  {String} 		  folderPath     		Absolute path to folder
+ * @param  {String|[String]}  options.pattern 		Default is '*.*' which means all immediate files. 
+ * @param  {String|[String]}  options.ignore 		
+ * @return {[String]}         				
  */
-const getFiles = (src='', options={}) => {
+const getFiles = (folderPath='', options={}) => Promise.resolve(null).then(() => {
 	const pattern = options.pattern || '*.*'
-	const opts = options.ignore ? { ignore: options.ignore } : null
-	return glob(join(src, pattern), opts)
-}
+	const ignore = options.ignore
+	const patterns = (typeof(pattern) == 'string' ? [pattern] : pattern).map(p => join(folderPath, p))
+	const opts = ignore ? { ignore:(typeof(ignore) == 'string' ? [ignore] : ignore).map(p => join(folderPath, p)) } : {}
+
+	return fg(patterns,opts)
+})
 
 module.exports = {
 	'get': getFiles,
