@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.5.0"></a>
+# [0.5.0](https://github.com/neapjs/funky/compare/v0.4.0...v0.5.0) (2019-04-30)
+
+
+### Features
+
+* 'src/handlers/static.js' - Add support for serving specific files only rather all of them. ([41f3440](https://github.com/neapjs/funky/commit/41f3440))
+
+
+
 <a name="0.4.0"></a>
 # [0.4.0](https://github.com/neapjs/funky/compare/v0.3.0...v0.4.0) (2019-04-27)
 
