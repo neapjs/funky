@@ -90,9 +90,9 @@ const getParams = (req, debugFn) => {
 				bodyParameters = (bodyHex.split(boundaryHex) || [])
 					.filter(x => x && x != HEX_CAR_RTN_01 && x != HEX_BOUNDARY_TRAIL)
 					.reduce((acc, x) => {
-						const [meta='', val=''] = (x.split(HEX_DBL_CAR_RTN).filter(y => y) || [null, null])
+						const [meta='', ...val] = x.split(HEX_DBL_CAR_RTN).filter(y => y)
 						const metadata = hexToUtf8(meta) + ' '
-						const value = val.replace(HEX_REGEX_TRAIL_CAR_RTN, '')
+						const value = val.join(HEX_DBL_CAR_RTN).replace(HEX_REGEX_TRAIL_CAR_RTN, '')
 						const name = (metadata.match(/ name="(.*?)"/) || [null, null])[1]
 						const filename = (metadata.match(/ filename="(.*?)"/) || [null, null])[1]
 						const mimetype = (metadata.match(/Content-Type: (.*?) /) || [null, null])[1]
