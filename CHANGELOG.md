@@ -1,6 +1,15 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+### [0.5.2](https://github.com/neapjs/funky/compare/v0.5.1...v0.5.2) (2019-07-11)
+
+
+### Bug Fixes
+
+* security alerts. Upgrade lodash to >= 4.17.13 ([5cc2a5b](https://github.com/neapjs/funky/commit/5cc2a5b))
+
+
 
 <a name="0.5.1"></a>
 ## [0.5.1](https://github.com/neapjs/funky/compare/v0.5.0...v0.5.1) (2019-07-11)
