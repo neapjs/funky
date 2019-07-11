@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.5.1"></a>
+## [0.5.1](https://github.com/neapjs/funky/compare/v0.5.0...v0.5.1) (2019-07-11)
+
+
+### Bug Fixes
+
+* Deocded input from textarea only keep the first line. All others are missing. ([6875628](https://github.com/neapjs/funky/commit/6875628))
+
+
+
 <a name="0.5.0"></a>
 # [0.5.0](https://github.com/neapjs/funky/compare/v0.4.0...v0.5.0) (2019-04-30)
 
