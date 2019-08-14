@@ -159,7 +159,7 @@ const app = {
 	},
 	handleEvent: () => (req, res) => processEvent(req, res, _config, _endpoints, _handlers, _preEvent, _postEvent),
 	listen: (...args) => {
-		const [appName, port, fn, silent=false, native=false] = (() => {
+		const [appName, port, fn, silent=false, native=false, host] = (() => {
 			const l = args.length
 			if (l >= 3) // (appName, port, fn, silent, native)
 				return args 
@@ -170,11 +170,11 @@ const app = {
 					return args
 			} else if (l == 1) {
 				if (typeof(args[0]) == 'object') { // ({ appName, port, fn, silent, native })
-					const { appName='app', port, fn, silent=false, native=false } = args[0]
+					const { appName='app', port, fn, silent=false, native=false, host } = args[0]
 					if (!port)
 						throw new Error('Missing required argument \'port\'')
 
-					return [appName,port,fn,silent,native]
+					return [appName, port, fn, silent, native, host]
 				} // (port)
 				return ['app', args[0]]
 			}
@@ -183,7 +183,7 @@ const app = {
 		})()
 
 		const input = createListenArity(appName, port, 3000)
-		const hostingType = getProvider()
+		const hostingType = host || getProvider()
 		if (!HOSTINGS[hostingType.toLowerCase()])
 			throw new Error(`Unsupported hosting type '${hostingType}'`)
 
