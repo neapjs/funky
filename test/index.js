@@ -744,8 +744,8 @@ describe('app', () => {
 
 			app.reset()
 			const { req } = app.createAWSRequestResponse(event)
-			assert.equal(req.params.firstName, 'Nic')
-			assert.equal(req.params.lastName, 'Dao')
+			assert.equal(req.params._awsParams.firstName, 'Nic')
+			assert.equal(req.params._awsParams.lastName, 'Dao')
 			assert.equal(req.method, 'POST')
 			assert.equal(req._parsedUrl.pathname, '/users/tony')
 			assert.equal(req.query.name, 'Nico')
@@ -759,8 +759,7 @@ describe('app', () => {
 	describe('#createAWSResponse', () => {
 		it('01 - Should convert an AWS event to a request/response object and then convert the response back to an AWS response.', () => {
 			const event = {
-				firstName: 'Nic',
-				lastName: 'Dao'
+				body: '{"firstName":"Nic", "lastName":"Dao"}'
 			}
 
 			const corsSetup = cors({

@@ -159,23 +159,23 @@ const app = {
 	},
 	handleEvent: () => (req, res) => processEvent(req, res, _config, _endpoints, _handlers, _preEvent, _postEvent),
 	listen: (...args) => {
-		const [appName, port, fn, silent=false,native=false] = (() => {
+		const [appName, port, fn, silent=false, native=false] = (() => {
 			const l = args.length
-			if (l >= 3) 
+			if (l >= 3) // (appName, port, fn, silent, native)
 				return args 
-			else if (l == 2) {
+			else if (l == 2) { // (port, fn)
 				if (typeof(args[1]) == 'function')
 					return ['app', ...args]
-				else
+				else // (appName, port)
 					return args
 			} else if (l == 1) {
-				if (typeof(args[0]) == 'object') {
+				if (typeof(args[0]) == 'object') { // ({ appName, port, fn, silent, native })
 					const { appName='app', port, fn, silent=false, native=false } = args[0]
 					if (!port)
 						throw new Error('Missing required argument \'port\'')
 
 					return [appName,port,fn,silent,native]
-				}
+				} // (port)
 				return ['app', args[0]]
 			}
 			else

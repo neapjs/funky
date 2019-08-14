@@ -180,7 +180,9 @@ const createAWSRequestResponse = (event={}, paramsPropName) => {
 			}
 		})
 
-		req[paramsPropName] = event
+		req[paramsPropName] = {
+			_awsParams: event
+		}
 		req.body = event.body || {}
 		req.query = event.queryStringParameters || {}
 		req.url = appendQuery(pathname, req.query)
@@ -196,10 +198,11 @@ const createAWSRequestResponse = (event={}, paramsPropName) => {
 
 const createAWSResponse = (res={}) => {
 	try {
+		const response = res._getData()
 		return {
 			statusCode: res.statusCode || 400,
 			headers: res._getHeaders ? res._getHeaders() : {},
-			body: res._getData ? res._getData() : ''
+			body: response ? typeof(response) == 'string' ? response : JSON.stringify(response) : ''
 		}
 	}
 	catch(err) {
