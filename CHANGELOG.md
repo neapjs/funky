@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.1](https://github.com/neapjs/funky/compare/v0.6.0...v0.6.1) (2019-08-14)
+
+
+### Bug Fixes
+
+* Explicitely defining the host in the listen functin does not work ([c54fa29](https://github.com/neapjs/funky/commit/c54fa29))
+
+
+
 ## [0.6.0](https://github.com/neapjs/funky/compare/v0.5.2...v0.6.0) (2019-08-14)
 
 
