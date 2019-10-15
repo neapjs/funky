@@ -32,6 +32,7 @@ Out-of-the-box features include:
 >   - [Creating A REST API](#creating-a-rest-api)
 >   - [Compatible With All Express Middleware](#compatible-with-all-express-middleware)
 >   - [Intercepting The res.send() Method](#intercepting-the-res.send-method)
+>   - [Reacting to AWS events](#reacting-to-aws-events)
 >   - [Reacting To Google PubSub Topics](#reacting-to-google-pubsub-topics)
 >   - [Authentication](#authentication) 
 >   - [Uploading Files & Images](#uploading-files--images)
@@ -296,7 +297,9 @@ As you can see, the example above demonstrates 3 different types of environment 
   "myCustomVar": "Hello Default"
 }
 ```
+
 ## Intercepting The res.send() Method
+
 Webfunc adds support for listeners on the following 3 response events:
 - __*sending*__ a response.
 - __*setting the headers*__ of a response.
@@ -316,6 +319,26 @@ app.get('/users/:username', (req, res) => {
 
 eval(app.listen(4000))
 ```
+
+## Reacting to AWS events
+
+```js
+
+const { app } = require('@neap/funky')
+
+app.all('/', (req,res) => {
+  const payload = req.params._awsParams || { message: 'No AWS data' }
+  console.log(payload)
+  return res.status(200).send('done')
+})
+
+eval(app.listen({ port:3102, host:'aws' }))
+```
+
+Notice:
+- The `listen` API must use an object with the property `host` set to `aws`.
+- For non-gateway events (i.e., Funky is not used to serve HTTP payloads), you have to use the `app.all` API (do not use `app.get`).
+- Not obvious, but the function __*MUST*__ use `return res.status(200).send('Whatever you want here')`. If you simply use `res.status.send('...')`, this function will not return anything to its client.
 
 ## Reacting To Google PubSub Topics
 
