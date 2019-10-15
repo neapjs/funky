@@ -7,7 +7,7 @@
   ],
   "main": "src/index.js",
   "scripts": {
-    "test": "mocha",
+    "test": "mocha --exit",
     "lint": "eslint src/ test/ --fix",
     "push": "git push --follow-tags origin master && npm publish --access=public",
     "rls": "standard-version --release-as",
