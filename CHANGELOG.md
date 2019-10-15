@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.2](https://github.com/neapjs/funky/compare/v0.6.1...v0.6.2) (2019-10-15)
+
+
+### Bug Fixes
+
+* 17 of 17 vulnerabilities in 2359 scanned packages + document how to use it in an AWS lambda environment ([d4e0796](https://github.com/neapjs/funky/commit/d4e0796))
+
+
+
 ### [0.6.1](https://github.com/neapjs/funky/compare/v0.6.0...v0.6.1) (2019-08-14)
 
 
