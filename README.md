@@ -327,9 +327,9 @@ eval(app.listen(4000))
 const { app } = require('@neap/funky')
 
 app.all('/', (req,res) => {
-  const payload = req.params._awsParams || { message: 'No AWS data' }
-  console.log(payload)
-  return res.status(200).send('done')
+    const payload = req.params._awsParams || { message: 'No AWS data' }
+    console.log(payload)
+    return res.status(200).send('done')
 })
 
 eval(app.listen({ port:3102, host:'aws' }))
