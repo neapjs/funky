@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.3](https://github.com/neapjs/funky/compare/v0.6.2...v0.6.3) (2019-12-09)
+
+
+### Bug Fixes
+
+* improve the start message ([e3328cb](https://github.com/neapjs/funky/commit/e3328cb))
+
+
+
 ### [0.6.2](https://github.com/neapjs/funky/compare/v0.6.1...v0.6.2) (2019-10-15)
 
 
