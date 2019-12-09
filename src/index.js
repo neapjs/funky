@@ -188,11 +188,8 @@ const app = {
 			throw new Error(`Unsupported hosting type '${hostingType}'`)
 
 		let hostCategory = !hostingType || hostingType == 'localhost' || hostingType == 'google' ? 'express' : hostingType
-		const notLocal = hostingType != 'localhost'
-		const startMessage = notLocal
-			? `Ready to receive traffic${!notLocal ? ` on port ${input.port}` : ''}`
-			: `Ready to receive traffic on ${`http://localhost:${input.port}`.bold.italic}`.cyan
-		const secondMsg = notLocal ? '' : 'Press Ctrl+C to stop the server'.cyan
+		const startMessage = `Ready to receive traffic on ${`http://localhost:${input.port}`.bold.italic}`.cyan
+		const secondMsg = 'Press Ctrl+C to stop the server'.cyan
 
 		// Determine what GCP category is setup
 		if (hostCategory == 'gcp') {
