@@ -199,16 +199,20 @@ const createAWSRequestResponse = (event={}, paramsPropName) => {
 const createAWSResponse = (res={}) => {
 	try {
 		const response = res._getData()
+		const isResponseString = typeof(response) == 'string';
 		const redirectUrl = res._getRedirectUrl()
 		const headers = res._getHeaders ? res._getHeaders() : {}
 
+		if (isResponseString)
+			headers['Content-Type'] = 'text/html'
+
 		if (redirectUrl)
-			headers.location = redirectUrl;
+			headers.Location = redirectUrl;
 
 		return {
 			statusCode: res.statusCode || 400,
 			headers,
-			body: response ? typeof(response) == 'string' ? response : JSON.stringify(response) : ''
+			body: response ? isResponseString ? response : JSON.stringify(response) : ''
 		}
 	}
 	catch(err) {
