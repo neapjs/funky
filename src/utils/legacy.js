@@ -199,9 +199,15 @@ const createAWSRequestResponse = (event={}, paramsPropName) => {
 const createAWSResponse = (res={}) => {
 	try {
 		const response = res._getData()
+		const redirectUrl = res._getRedirectUrl()
+		const headers = res._getHeaders ? res._getHeaders() : {}
+
+		if (redirectUrl)
+			headers.location = redirectUrl;
+
 		return {
 			statusCode: res.statusCode || 400,
-			headers: res._getHeaders ? res._getHeaders() : {},
+			headers,
 			body: response ? typeof(response) == 'string' ? response : JSON.stringify(response) : ''
 		}
 	}
