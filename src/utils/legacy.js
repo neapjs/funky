@@ -198,11 +198,35 @@ const createAWSRequestResponse = (event={}, paramsPropName) => {
 
 const createAWSResponse = (res={}) => {
 	try {
-		const response = res._getData()
+		const body = res._getData()
+		const isString = typeof(body) == 'string';
+		const redirectUrl = res._getRedirectUrl()
+		const headers = res._getHeaders ? res._getHeaders() : {}
+
+		if (isString)
+			headers['Content-Type'] = 'text/html'
+
+		if (redirectUrl)
+			headers.Location = redirectUrl;
+
+		Object.keys(res.cookies || {}).forEach(cookieName => {	
+			const cookie = res.cookies[cookieName]
+			const options = cookie.options || {}
+			const arr = []
+
+			arr.push(`${cookieName}=${cookie.value}`)
+
+			Object.keys(options).forEach(optionName => {
+				arr.push(`${optionName}=${options[optionName]}`)
+			})
+
+			headers["Set-Cookie"] = arr.join("; ")
+		})
+
 		return {
 			statusCode: res.statusCode || 400,
-			headers: res._getHeaders ? res._getHeaders() : {},
-			body: response ? typeof(response) == 'string' ? response : JSON.stringify(response) : ''
+			headers,
+			body: body ? isString ? body : JSON.stringify(body) : ''
 		}
 	}
 	catch(err) {
