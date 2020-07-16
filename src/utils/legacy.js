@@ -199,7 +199,7 @@ const createAWSRequestResponse = (event={}, paramsPropName) => {
 const createAWSResponse = (res={}) => {
 	try {
 		const body = res._getData()
-		const isString = typeof(body) == 'string';
+		const isString = typeof(body) == 'string'
 		const redirectUrl = res._getRedirectUrl()
 		const headers = res._getHeaders ? res._getHeaders() : {}
 
@@ -207,7 +207,7 @@ const createAWSResponse = (res={}) => {
 			headers['Content-Type'] = 'text/html'
 
 		if (redirectUrl)
-			headers.Location = redirectUrl;
+			headers.Location = redirectUrl
 
 		Object.keys(res.cookies || {}).forEach(cookieName => {	
 			const cookie = res.cookies[cookieName]
@@ -220,7 +220,7 @@ const createAWSResponse = (res={}) => {
 				arr.push(`${optionName}=${options[optionName]}`)
 			})
 
-			headers["Set-Cookie"] = arr.join("; ")
+			headers['Set-Cookie'] = arr.join('; ')
 		})
 
 		return {
