@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.7.0](https://github.com/neapjs/funky/compare/v0.6.6...v0.7.0) (2020-07-18)
+
+
+### Features
+
+* Add support for 'service' metadata to indicate which service is starting when the server starts listening on a specific port ([355cbfa](https://github.com/neapjs/funky/commit/355cbfab6931e42ff1cb3f6dfe9a7353f2b3f12f))
+
 ### [0.6.6](https://github.com/neapjs/funky/compare/v0.6.3...v0.6.6) (2020-07-16)
 
 
