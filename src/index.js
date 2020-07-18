@@ -73,6 +73,42 @@ const resetConfig = (config={}) => {
 	_config = config
 }
 
+/**
+ * Wrangles the various arities to output a structured signature for the 'listen' function. 
+ * 
+ * @param  {} args
+ * 
+ * @return {String}		arg[0]		appName
+ * @return {Number}		arg[1]		port
+ * @return {Function}	arg[2]		fn
+ * @return {Boolean}	arg[3]		silent
+ * @return {Boolean}	arg[4]		native
+ * @return {String}		arg[5]		host
+ * @return {String}		arg[6]		service	
+ */
+const _getListenArguments = (...args) => {
+	const l = args.length
+	if (l >= 3) // (appName, port, fn, silent, native)
+		return args 
+	else if (l == 2) { // (port, fn)
+		if (typeof(args[1]) == 'function')
+			return ['app', ...args]
+		else // (appName, port)
+			return args
+	} else if (l == 1) {
+		if (typeof(args[0]) == 'object') { // ({ appName, port, fn, silent, native })
+			const { appName='app', port, fn, silent=false, native=false, host, service } = args[0]
+			if (!port)
+				throw new Error('Missing required argument \'port\'')
+
+			return [appName, port, fn, silent, native, host, service]
+		} // (port)
+		return ['app', args[0]]
+	}
+	else
+		return []
+}
+
 let _handlers = []
 let _endpoints = []
 let _server = null
@@ -159,28 +195,7 @@ const app = {
 	},
 	handleEvent: () => (req, res) => processEvent(req, res, _config, _endpoints, _handlers, _preEvent, _postEvent),
 	listen: (...args) => {
-		const [appName, port, fn, silent=false, native=false, host] = (() => {
-			const l = args.length
-			if (l >= 3) // (appName, port, fn, silent, native)
-				return args 
-			else if (l == 2) { // (port, fn)
-				if (typeof(args[1]) == 'function')
-					return ['app', ...args]
-				else // (appName, port)
-					return args
-			} else if (l == 1) {
-				if (typeof(args[0]) == 'object') { // ({ appName, port, fn, silent, native })
-					const { appName='app', port, fn, silent=false, native=false, host } = args[0]
-					if (!port)
-						throw new Error('Missing required argument \'port\'')
-
-					return [appName, port, fn, silent, native, host]
-				} // (port)
-				return ['app', args[0]]
-			}
-			else
-				return []
-		})()
+		const [appName, port, fn, silent=false, native=false, host, service] = _getListenArguments(...args)
 
 		const input = createListenArity(appName, port, 3000)
 		const hostingType = host || getProvider()
@@ -188,7 +203,8 @@ const app = {
 			throw new Error(`Unsupported hosting type '${hostingType}'`)
 
 		let hostCategory = !hostingType || hostingType == 'localhost' || hostingType == 'google' ? 'express' : hostingType
-		const startMessage = `Ready to receive traffic on ${`http://localhost:${input.port}`.bold.italic}`.cyan
+		const messageHeader = service ? `${service.bold.italic} is ready` : 'Ready'
+		const startMessage = `${messageHeader} to receive traffic on ${`http://localhost:${input.port}`.bold.italic}`.cyan
 		const secondMsg = 'Press Ctrl+C to stop the server'.cyan
 
 		// Determine what GCP category is setup
