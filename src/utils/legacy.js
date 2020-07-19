@@ -15,6 +15,32 @@ const hexToUtf8 = h => h ? Buffer.from(h, 'hex').toString() : ''
 const hexToBuf = h => h ? Buffer.from(h, 'hex') : new Buffer(0)
 /*eslint-enable */
 
+/**
+ * Parses a multiplart value based on its mimetype. 
+ * 
+ * @param  {String} mimetype
+ * @param  {String} filename
+ * @param  {Buffer} value
+ * 
+ * @return {Object}	output.mimetype
+ * @return {String}	output.filename
+ * @return {String}	output.value
+ */
+const _parseMultiPartValue = ({ mimetype, filename, value }) => {
+	if (!mimetype)
+		return { value:hexToBuf(value).toString(), mimetype, filename }
+
+	const valueIsJSON = mimetype == 'application/json' && (!filename || !/\.json$/.test(filename))
+	if (valueIsJSON) {
+		try {
+			return { value:JSON.parse(hexToBuf(value).toString()), mimetype:null, filename:null }
+		} catch(err) {
+			return { value:JSON.parse(hexToBuf(value).toString()), mimetype, filename }
+		}
+	} else 
+		return { value:hexToBuf(value), mimetype, filename }
+}
+
 const HEX_CAR_RTN_01 = utf8ToHex('--\r\n')
 const HEX_CAR_RTN_02 = utf8ToHex('\r\n')
 const HEX_BOUNDARY_TRAIL = utf8ToHex('--')
@@ -97,7 +123,7 @@ const getParams = (req, debugFn) => {
 						const filename = (metadata.match(/ filename="(.*?)"/) || [null, null])[1]
 						const mimetype = (metadata.match(/Content-Type: (.*?) /) || [null, null])[1]
 						if (name)
-							acc[name] = { value: mimetype ? hexToBuf(value) : hexToBuf(value).toString(), filename, mimetype }
+							acc[name] = _parseMultiPartValue({ filename, mimetype, value })
 						return acc
 					}, {})
 
