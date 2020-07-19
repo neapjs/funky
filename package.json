@@ -1,6 +1,6 @@
 {
   "name": "@neap/funky",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "Lightweight Serverless HTTP handler. It supports CORS and also assists in initialization of web app projects hosted on Google Cloud Functions, AWS Lambda or any standard NodeJs Express server.",
   "contributors": [
     "Nicolas Dao <nic@neap.co> (https://neap.co/)"

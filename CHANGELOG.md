@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.8.0](https://github.com/neapjs/funky/compare/v0.7.0...v0.8.0) (2020-07-19)
+
+
+### Features
+
+* Add support for decoding JSON fields in 'multipart/form-data' requests ([082e091](https://github.com/neapjs/funky/commit/082e09164a9f740270174d9425852e9a3a1686d4))
+
 ## [0.7.0](https://github.com/neapjs/funky/compare/v0.6.6...v0.7.0) (2020-07-18)
 
 
