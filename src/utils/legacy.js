@@ -173,7 +173,6 @@ const createGCPRequestResponse = (event={}, paramsPropName) => {
 		const res = httpMocks.createResponse()
 		// This fixes a bug in the Express compression library (https://github.com/apigee/trireme/issues/124)
 		res._implicitHeader = function() {
-			console.log('Hello')
 			if (this.writeHead && this.statusCode)
 				this.writeHead(this.statusCode)
 		}
@@ -225,7 +224,6 @@ const createAWSRequestResponse = (event={}, paramsPropName) => {
 		const res = httpMocks.createResponse()
 		// This fixes a bug in the Express compression library (https://github.com/apigee/trireme/issues/124)
 		res._implicitHeader = function() {
-			console.log('Hello')
 			if (this.writeHead && this.statusCode)
 				this.writeHead(this.statusCode)
 		}
