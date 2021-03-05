@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.1](https://github.com/neapjs/funky/compare/v1.0.0...v1.0.1) (2021-03-05)
+
+
+### Bug Fixes
+
+* The compression package fails due to missing _implicitHeader function ([72be9ec](https://github.com/neapjs/funky/commit/72be9ec2396e99af8c782980597070ba3b620d3e))
+
 ## [1.0.0](https://github.com/neapjs/funky/compare/v0.8.1...v1.0.0) (2021-03-05)
 
 ### [0.8.1](https://github.com/neapjs/funky/compare/v0.8.0...v0.8.1) (2020-08-24)
