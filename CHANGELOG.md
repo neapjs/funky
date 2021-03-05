@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.3](https://github.com/neapjs/funky/compare/v1.0.1...v1.0.3) (2021-03-05)
+
+
+### Bug Fixes
+
+* Remove log pollutiong ([64dae29](https://github.com/neapjs/funky/commit/64dae29e554fa35d3977f7b578f06f8614b8099e))
+
 ### [1.0.1](https://github.com/neapjs/funky/compare/v1.0.0...v1.0.1) (2021-03-05)
 
 
