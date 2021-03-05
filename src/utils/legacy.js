@@ -170,7 +170,15 @@ const createGCPRequestResponse = (event={}, paramsPropName) => {
 		req.body = body
 		req.__event = event
 
-		return { req, res: httpMocks.createResponse() }
+		const res = httpMocks.createResponse()
+		// This fixes a bug in the Express compression library (https://github.com/apigee/trireme/issues/124)
+		res._implicitHeader = function() {
+			console.log('Hello')
+			if (this.writeHead && this.statusCode)
+				this.writeHead(this.statusCode)
+		}
+
+		return { req, res }
 	}
 	catch(err) {
 		console.error(err)
@@ -214,7 +222,15 @@ const createAWSRequestResponse = (event={}, paramsPropName) => {
 		req.url = appendQuery(pathname, req.query)
 		req.__event = event
 
-		return { req, res: httpMocks.createResponse() }
+		const res = httpMocks.createResponse()
+		// This fixes a bug in the Express compression library (https://github.com/apigee/trireme/issues/124)
+		res._implicitHeader = function() {
+			console.log('Hello')
+			if (this.writeHead && this.statusCode)
+				this.writeHead(this.statusCode)
+		}
+
+		return { req, res }
 	}
 	catch(err) {
 		console.error(err)
