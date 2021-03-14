@@ -273,16 +273,11 @@ const app = {
 				if (require.main === module) {
 					${commonScript}
 				}
-				exports.handler = (event, context, next) => {	
+				exports.handler = async (event, context) => {	
 					const { req, res } = ${input.appName}.createAWSRequestResponse(event)
-					${input.appName}.handleEvent()(req, res)
-					.then(() => {
-						const awsRes = ${input.appName}.createAWSResponse(res)
-						next(null, awsRes)
-					})
-					.catch(err => {
-						next(err, null)
-					})
+					await ${input.appName}.handleEvent()(req, res)
+					const awsRes = ${input.appName}.createAWSResponse(res)
+					return awsRes
 				}`
 			default:
 				throw new Error(`Unsupported hosting type '${hostCategory}'`)
